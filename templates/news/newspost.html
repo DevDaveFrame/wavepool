@@ -13,11 +13,14 @@
 				<a target="_blank" href="{{ad.url}}">
 					<div class="row">
 						<div class="col-4 spoonsor-image">
-							{% if ad.logo.url is None %}
-   							<img src="{% static 'spoonsers/' %}{{ad.logo}}" width="200px" />
-							{% else %}
-   							<img src="{{ad.logo.url}}" width="200px" />
-   							{% endif %}
+						   {% if ad.logo.url is None %}
+						   <img src="{% static 'spoonsers/' %}{{ad.logo}}" width="200px" />
+						   {% else %}
+						   <img src="{{ad.logo.url}}" width="200px" />
+						   {% endif %}
+						</div>
+						<div class="col spoonsor-content">
+							<span class="spoonsor-text">This news post is brought to you by {{ad.company_name}} - {{ad.copy}}</span>
 						</div>
 					</div>
 				</a>
