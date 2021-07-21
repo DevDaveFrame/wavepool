@@ -36,3 +36,7 @@ ADS = [
 
 def get_ad():
     return random.choice(ADS)
+
+
+def get_default_ad():
+    return ADS[-1]
