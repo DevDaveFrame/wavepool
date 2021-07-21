@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
@@ -30,6 +30,15 @@ class NewsPost(models.Model):
 
     def __str__(self):
         return '<{}> {}'.format(self.divesite.url_name, self.title)
+
+    def save(self, *args, **kwargs):
+        if not self.is_cover_story:
+            return super().save()
+        with transaction.atomic():
+            NewsPost.objects.filter(
+                is_cover_story=True).update(is_cover_story=False)
+            return super().save()
+
 
     @property
     def url(self):
