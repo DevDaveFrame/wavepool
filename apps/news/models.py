@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from taxonomy.models import DiveSite, Topic
-
+from advertising.models import Advertisement
 
 DIVESITE_SOURCE_NAMES = {
     'retaildive': 'Retail Dive',
@@ -27,6 +27,7 @@ class NewsPost(models.Model):
     divesite = models.ForeignKey(DiveSite, null=True, on_delete=models.SET_NULL)
     topics = models.ManyToManyField(Topic)
     active = models.BooleanField(default=True)
+    ad = models.ForeignKey(Advertisement, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return '<{}> {}'.format(self.divesite.url_name, self.title)
