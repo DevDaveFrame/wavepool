@@ -1,3 +1,5 @@
+import re
+
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
@@ -27,6 +29,7 @@ class NewsPost(models.Model):
     divesite = models.ForeignKey(DiveSite, null=True, on_delete=models.SET_NULL)
     topics = models.ManyToManyField(Topic)
     active = models.BooleanField(default=True)
+    teaser = models.TextField(null=True)
 
     def __str__(self):
         return '<{}> {}'.format(self.divesite.url_name, self.title)
@@ -36,12 +39,12 @@ class NewsPost(models.Model):
         return reverse('newspost_detail', kwargs={'newspost_id': self.pk})
 
     @property
-    def teaser(self):
-        return self.body[:150]
-
-    @property
     def source_divesite(self):
         return self.divesite.display_name
+
+    @property
+    def default_teaser(self):
+        return self.body[:150]
 
     def tags(self):
         return [
