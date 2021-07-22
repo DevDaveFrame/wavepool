@@ -11,6 +11,10 @@
 		<a href="{{ feed_item.url }}">{{ feed_item.title }}</a>
 	</div>
 	<div class="feed-teaser" data-story_id="{{feed_item.pk}}">
-		{{ feed_item.teaser|safe  }} ...
+		{% if feed_item.teaser is not None%}
+		{{ feed_item.teaser|safe }} ...
+		{% else %}
+		{{ feed_item.default_teaser|truncatechars_html:150|striptags}} ...
+		{% endif %}
 	</div>
 </li>
