@@ -32,8 +32,11 @@ class NewsPost(models.Model):
         return '<{}> {}'.format(self.divesite.url_name, self.title)
 
     def save(self, *args, **kwargs):
+        # If we're not setting a new cover, go about your business...
         if not self.is_cover_story:
             return super().save()
+        # otherwise, look for other posts with a cover story flag set to true
+        # set those flags to false, commit those changes, THEN save the new cover story.
         with transaction.atomic():
             NewsPost.objects.filter(
                 is_cover_story=True).update(is_cover_story=False)
