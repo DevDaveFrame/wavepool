@@ -14,6 +14,10 @@
 		{% if feed_item.teaser is not None%}
 		{{ feed_item.teaser|safe }} ...
 		{% else %}
+		<!--	I tried using default filters here to some effect
+				Unfortunately, it still leaves the possibility of displaying
+				a final, previously unclosed html tag in the teaser.
+			-->
 		{{ feed_item.default_teaser|truncatechars_html:150|striptags}} ...
 		{% endif %}
 	</div>
